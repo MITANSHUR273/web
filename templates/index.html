@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOD Attendance System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        // Function to toggle visibility based on selected report type
+        function toggleFields() {
+            const reportType = document.getElementById("attendance_type").value;
+            const houseFields = document.getElementById("houseFields");
+            const classFields = document.getElementById("classFields");
+            if (reportType === "house") {
+                houseFields.style.display = "block";
+                classFields.style.display = "none";
+            } else if (reportType === "class") {
+                classFields.style.display = "block";
+                houseFields.style.display = "none";
+            } else {
+                houseFields.style.display = "none";
+                classFields.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>MOD Attendance App</h1>
+    </header>
+    <main>
+        <form method="POST" action="/submit_attendance">
+            <h3>Select Report Type:</h3>
+            <label for="attendance_type">Attendance Type</label>
+            <select name="attendance_type" id="attendance_type" required onchange="toggleFields()">
+                <option value="">--Select Report Type--</option>
+                <option value="house">House-wise Attendance</option>
+                <option value="class">Class-wise Attendance</option>
+            </select>
+            <br><br>
+        
+            <!-- House-wise Attendance Fields -->
+            <div id="houseFields" style="display: none;">
+                <h3>Enter House Attendance Details:</h3>
+                <label for="house">Choose House:</label>
+                <select name="house" id="house">
+                    <option value="">--Select House--</option>
+                    <option value="Arawali">Arawali</option>
+                    <option value="Nilgiri">Nilgiri</option>
+                    <option value="Shivalik">Shivalik</option>
+                    <option value="Udyagiri">Udyagiri</option>
+                </select>
+                <br><br>
+                <label for="category">Category:</label>
+                <select name="category" id="category" required>
+                    <option value="">--Select Category--</option>
+                    <option value="Junior Boys">Junior Boys</option>
+                    <option value="Junior Girls">Junior Girls</option>
+                    <option value="Senior Boys">Senior Boys</option>
+                    <option value="Senior Girls">Senior Girls</option>
+                </select>
+                <br><br>
+            </div>
+        
+            <!-- Class-wise Attendance Fields -->
+            <div id="classFields" style="display: none;">
+                <h3>Enter Class Attendance Details:</h3>
+                <label for="class">Choose Class:</label>
+                <select name="class" id="class">
+                    <option value="">--Select Class--</option>
+                    <option value="6A">Class 6A</option>
+                    <option value="6B">Class 6B</option>
+                    <option value="7A">Class 7A</option>
+                    <option value="7B">Class 7B</option>
+                    <option value="8A">Class 8A</option>
+                    <option value="8B">Class 8B</option>
+                    <option value="9A">Class 9A</option>
+                    <option value="9B">Class 9B</option>
+                    <option value="10A">Class 10A</option>
+                    <option value="10B">Class 10B</option>
+                    <option value="11A">Class 11A</option>
+                    <option value="11B">Class 11B</option>
+                    <option value="12A">Class 12A</option>
+                    <option value="12B">Class 12B</option>
+                </select>
+                <br><br>
+            </div>
+
+            <!-- Common Attendance Fields -->
+            <h3>Enter Attendance Details:</h3>
+            <label for="total">Total Students:</label>
+            <input type="number" id="total" name="total" required>
+            <br><br>
+            <label for="present">Present Students:</label>
+            <input type="number" id="present" name="present" required>
+            <br><br>
+            <label for="absent">Absent Students:</label>
+            <input type="number" id="absent" name="absent" required>
+            <br><br>
+            <label for="onDuty">On Duty Students:</label>
+            <input type="number" id="onDuty" name="onDuty" required>
+            <br><br>
+            <label for="leave">Leave Students:</label>
+            <input type="number" id="leave" name="leave" required>
+            <br><br>
+            <label for="notReported">Not Reported Students:</label>
+            <input type="number" id="notReported" name="notReported" required>
+            <br><br>
+            <button type="submit">Submit Attendance</button>
+        </form>
+        <br>
+        <a href="/export"><button>Export to Excel</button></a>
+    </main>
+</body>
+</html>
